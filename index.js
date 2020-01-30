@@ -147,6 +147,27 @@ class Instructor extends Lambdasian {
   grade(student, subject) {
     return `${student.name} recieves a perfect score on ${subject}`
   }
+  generateRandomNumber(){
+    let min = Math.ceil(-10);
+    let max = Math.floor(20);
+    return Math.floor(Math.random()* (max - min +1)) +min;
+  }
+  helpGrade(student){
+    while(student.grade < 70){
+      console.log(`${student.name}'s grade is ${student.grade}. They need to study harder!`);
+      student.grade += ( this.generateRandomNumber());
+      if (student.grade > 100){
+        student.grade = 100;
+      }
+      if (student.grade < -50){
+        student.grade = -50;
+      }
+    }
+    if (student.grade >= 70) {
+      console.log(`${student.name}'s grade is ${student.grade}.`)
+      console.log(`Congratulations ${student.name}, you graduated!`);
+    }
+  }
 }
 
 /*
@@ -170,6 +191,7 @@ class Student extends Lambdasian {
       this.previousBackground = studentAttrs.previousBackground;
       this.className = studentAttrs.className;
       this.favSubjects = studentAttrs.favSubjects;
+      this.grade = studentAttrs.grade;
   }
   listSubjects() {
     return `Loving ${this.favSubjects};`
@@ -217,6 +239,45 @@ class ProjectManager extends Instructor{
       + This method, when called, will check the grade of the student and see if they're ready to graduate from Lambda School
       + If the student's grade is above a 70% let them graduate! Otherwise go back to grading their assignments to increase their score.
 */
+
+
+
+const testInstructor = new Instructor({
+  name: "Jared",
+  age: 22,
+  location: "San Diego",
+  specialty: "CS",
+  favLanguage: "Python",
+  catchPhrase: "Woah there!",
+})
+const testPM = new ProjectManager ({
+  name:"Sara",
+  age:44,
+  location: "Dallas",
+  specialty: "DevOps",
+  favLanguage: "Ruby",
+  catchPhrase: "How 'bout them apples!",
+  gradClassName: "CS1",
+  favInstructor: "Jared",
+})
+const testStudent = new Student({
+  name: "Michael",
+  age: 33,
+  location: "Seattle",
+  previousBackground: "misc",
+  className: "Web28",
+  favSubjects : ['JS', 'CSS', 'HTML'],
+  grade: 0,
+});
+
+console.log(testInstructor);
+
+console.log(testPM);
+console.log(testStudent);
+
+testPM.helpGrade(testStudent);
+console.log(testStudent);
+
 
 ///////// END OF CHALLENGE /////////
 ///////// END OF CHALLENGE /////////
